@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+// @ts-ignore
 import Home from "../pages/Home.vue";
+// @ts-ignore
 import Board from "../pages/Board.vue";
 
 const router = createRouter({

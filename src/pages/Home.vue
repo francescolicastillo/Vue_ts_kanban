@@ -29,7 +29,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import router from "@/router/routes";
 import { ref } from "vue";
 import { useBoardStore } from "@/stores/boardStore";
