@@ -112,7 +112,8 @@ You will lose all your info in this board.`)) {
 
 .board__container {
   width: 200px;
-  height: 150px;
+  min-height: 150px;
+  height: 100%;
   cursor: pointer;
   margin: 10px 20px;
   border: 1px solid rgb(199, 199, 199);
@@ -125,15 +126,13 @@ You will lose all your info in this board.`)) {
 }
 
 .board-title {
-  height: 120px;
+  min-height: 120px;
+  height: calc(100% - 30px);
   width: 100%;
   text-align: center;
   align-content: center;
   font-size: 2rem;
-}
-
-.board-title:hover {
-  font-size: 2.3rem;
+  word-wrap: break-word;
 }
 
 .btn-board {

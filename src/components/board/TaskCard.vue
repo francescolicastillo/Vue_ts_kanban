@@ -37,7 +37,6 @@ function deleteTask() {
 </script>
 
 <style scoped>
-
 .task-container {
   background: white;
   border-radius: 10px;

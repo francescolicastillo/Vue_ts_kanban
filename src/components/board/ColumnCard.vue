@@ -41,13 +41,11 @@
       </template>
     </draggableComponent>
     <button class="btn__create-card" v-if="!showNewTaskCard" @click="toggleNewTask">Add a card</button>
-    <div class="new-task" v-else>
-      <input class="input__new-task" type="text" v-model.trim="cardTitle" placeholder="New task">
-      <div>
-        <button class="btn__confirm-list" @click="addCard">Add card</button>
-        <button class="btn__cancel-list" @click="toggleNewTask">X</button>
-      </div>
-    </div>
+    <NewTask 
+      v-else
+      @close-newTask="showNewTaskCard = !showNewTaskCard"
+      @addTask="addTask($event)"
+    />
   </div>
 </template>
 
@@ -59,6 +57,7 @@ import { useTaskStore } from '@/stores/taskStore.js';
 import { useColumnStore } from '@/stores/columnStore.js';
 import EditColumn from './EditColumn.vue';
 import TaskCard from './TaskCard.vue';
+import NewTask from './NewTask.vue';
 
 const columnStore = useColumnStore();
 const taskStore = useTaskStore();
@@ -89,19 +88,18 @@ function drag(evt) {
   }
 }
 
-function addCard() {
+function addTask(task) {
   const newTask = {
     id: uuidv4(),
     status: 2,
     owner: column.id,
-    title: cardTitle.value,
+    title: task,
   };
   taskStore.addTask(newTask);
   toggleNewTask();
 }
 
 function toggleNewTask() {
-  cardTitle.value = "";
   showNewTaskCard.value = !showNewTaskCard.value;
 }
 
@@ -285,49 +283,6 @@ function deleteColumn() {
 }
 
 .btn__create-card:hover {
-  opacity: 1;
-}
-
-.new-task {
-  width: 100%;
-  max-height: 100px;
-  border-radius: 15px;
-  background: #cdcecf;
-}
-
-.input__new-task {
-  font-size: 1.4rem;
-  margin-block: 10px;
-  width: 240px;
-}
-
-.btn__confirm-list {
-  width: 70%;
-  height: 35px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  background: #12db22;
-  opacity: 0.6;
-}
-
-.btn__cancel-list {
-  width: 30%;
-  height: 35px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  background: #db1212;
-  opacity: 0.6;
-}
-
-.btn__confirm-list:hover {
-  opacity: 1;
-}
-
-.btn__cancel-list:hover {
   opacity: 1;
 }
 

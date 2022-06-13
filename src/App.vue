@@ -13,5 +13,12 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Gill Sans", sans-serif;
+
+  
+  background-color: rgb(38, 38, 38);
+}
+
+.dark-mode {
+  background-color: rgb(38, 38, 38);
 }
 </style>
