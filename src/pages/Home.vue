@@ -108,11 +108,10 @@ You will lose all your info in this board.`)) {
   padding: 0;
   display:flex;
   flex-wrap: wrap;
-  place-content: center;
 }
 
 .board__container {
-  width: 28%;
+  width: 250px;
   min-height: 150px;
   height: 100%;
   cursor: pointer;
