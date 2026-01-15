@@ -12,8 +12,7 @@ import Header from './components/Header.vue';
 body {
   margin: 0;
   padding: 0;
-  font-family: "Gill Sans", sans-serif;
-
+  font-family: sans-serif;
   
   background-color: rgb(38, 38, 38);
 }
