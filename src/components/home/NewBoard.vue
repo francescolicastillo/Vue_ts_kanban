@@ -13,17 +13,17 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { v4 as uuidv4 } from 'uuid';
 import { useBoardStore } from '@/stores/boardStore';
 import { onMounted, ref } from 'vue';
 
 const boards = useBoardStore();
 const boardName = ref("");
-const autofocus = ref(null);
+const autofocus = ref<HTMLInputElement | null>(null);
 
 onMounted(() => {
-  autofocus.value.focus();
+  autofocus.value?.focus();
 });
 
 const emit = defineEmits(["close-newBoard"]);

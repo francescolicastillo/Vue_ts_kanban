@@ -1,50 +1,49 @@
 <template>
-  <div class="new-board-column">
-    <input class="input__new-list" type="text" v-model.trim="name" ref="newNameInput" value="New list" placeholder="Name list">
+  <div class="edit-board-column">
+    <input class="input__edit-list" type="text" v-model.trim="name" ref="newNameInput" placeholder="New name list">
     <div>
-      <button class="btn__confirm-list" @click="addList">Create list</button>
-      <button class="btn__cancel-list" @click="closeNewList">X</button>
+      <button class="btn__confirm-list" @click="saveList">Save changes</button>
+      <button class="btn__cancel-list" @click="closeEditList">X</button>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useColumnStore } from '@/stores/columnStore';
 
+const { column } = defineProps(["column"]);
+const emit = defineEmits(["close-editColumn"]);
+
 const columnStore = useColumnStore();
-const name = ref("");
-const newNameInput = ref(null);
+const name = ref(column.name);
+const newNameInput = ref<HTMLInputElement | null>(null);
 
 onMounted(() => {
-  newNameInput.value.focus();
+  newNameInput.value?.focus();
 })
 
-const { boardId } = defineProps(["boardId"]);
-const emit = defineEmits(["close-newColumn"]);
-
-const addList = () => {
-  columnStore.addColumn(boardId, name.value);
-  closeNewList()
+const saveList = () => {
+  column.name = name.value;
+  columnStore.editNameColumn(column);
+  closeEditList()
 }
 
-const closeNewList = () => {
+const closeEditList = () => {
   name.value = "";
-  emit("close-newColumn");
+  emit("close-editColumn");
 }
 </script>
 
 <style scoped>
-.new-board-column {
-  width: 240px;
+.edit-board-column {
+  width: 100%;
   max-height: 100px;
-  margin-inline: 10px;
   border-radius: 15px;
-  padding: 10px 10px;
   background: #cdcecf;
 }
 
-.input__new-list {
+.input__edit-list {
   font-size: 1.4rem;
   margin-block: 10px;
   width: 240px;

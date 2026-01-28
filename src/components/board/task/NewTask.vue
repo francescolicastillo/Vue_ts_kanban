@@ -8,15 +8,15 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from 'vue';
-const autofocus = ref(null);
+const autofocus = ref<HTMLInputElement | null>(null);
 const cardTitle = ref("");
 
 const emit = defineEmits(["close-newTask", "addTask"]);
 
 onMounted(() => {
-  autofocus.value.focus();
+  autofocus.value?.focus();
   cardTitle.value = "";
 });
 

@@ -1,6 +1,6 @@
 <template>
   <div class="edit-board-column">
-    <input class="input__edit-list" type="text" v-model.trim="name" ref="newNameInput" value="New list" placeholder="Task">
+    <input class="input__edit-list" type="text" v-model.trim="name" ref="newNameInput" placeholder="Task">
     <div>
       <button class="btn__confirm-list" @click="saveChanges">Save changes</button>
       <button class="btn__cancel-list" @click="closeEditTask">X</button>
@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useTaskStore } from '@/stores/taskStore';
 
@@ -17,10 +17,10 @@ const emit = defineEmits(["close-editTask"]);
 
 const taskStore = useTaskStore();
 const name = ref(task.title);
-const newNameInput = ref(null);
+const newNameInput = ref<HTMLInputElement | null>(null);
 
 onMounted(() => {
-  newNameInput.value.focus();
+  newNameInput.value?.focus();
 })
 
 const saveChanges = () => {

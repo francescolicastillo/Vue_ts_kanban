@@ -49,21 +49,20 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 import draggableComponent from 'vuedraggable';
 import { useTaskStore } from '@/stores/taskStore.js';
 import { useColumnStore } from '@/stores/columnStore.js';
 import EditColumn from './EditColumn.vue';
-import TaskCard from './TaskCard.vue';
-import NewTask from './NewTask.vue';
+import TaskCard from '../task/TaskCard.vue';
+import NewTask from '../task/NewTask.vue';
 
 const columnStore = useColumnStore();
 const taskStore = useTaskStore();
 
 const showNewTaskCard = ref(false);
-const cardTitle = ref("");
 const isOpen = ref(false);
 const headerColumn = ref(true);
 
@@ -73,7 +72,7 @@ function openClose() {
   isOpen.value = !isOpen.value;
 };
 
-function drag(evt) {
+function drag(evt: any) {
   if (dragColumn && dropColumn) {
     if (evt.added) {
       const updatedItem = {
@@ -88,7 +87,7 @@ function drag(evt) {
   }
 }
 
-function addTask(task) {
+function addTask(task: string) {
   const newTask = {
     id: uuidv4(),
     status: 2,

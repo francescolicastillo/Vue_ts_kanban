@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useBoardStore } from '@/stores/boardStore';
 import { onMounted, ref } from 'vue';
 
@@ -19,10 +19,10 @@ const { board } = defineProps(["board"]);
 
 const boards = useBoardStore();
 const boardName = ref(board.name);
-const autofocus = ref(null);
+const autofocus = ref<HTMLInputElement | null>(null);
 
 onMounted(() => {
-  autofocus.value.focus();
+  autofocus.value?.focus();
 });
 
 const emit = defineEmits(["close-editBd"]);
