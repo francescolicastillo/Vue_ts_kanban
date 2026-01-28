@@ -2,6 +2,8 @@ import { getDefaultList } from "@/assets/defaultData";
 import { useStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { v4 as uuidv4 } from 'uuid';
+import type { Column } from "@/types/column";
+
 
 export const useColumnStore = defineStore("columnStore", {
   state: () => ({
@@ -12,25 +14,25 @@ export const useColumnStore = defineStore("columnStore", {
   }),
   getters: {
     getListByOwner: (state) => {
-      return (boardId) =>
+      return (boardId: string) =>
         state.list.filter((column) => column.owner == boardId);
     },
   },
   actions: {
-    addColumn(boardId, name) {
-      const newList = {
+    addColumn(boardId: string, name: string) {
+      const newColumn = {
         id: uuidv4(),
         owner: boardId,
         name: name,
       };
-      this.list.push(newList);
+      this.list.push(newColumn);
     },
-    editNameColumn(item) {
+    editNameColumn(updatedColumn: Column) {
       this.list = this.list.map((column) =>
-        column.id == item.id ? item : column
+        column.id == updatedColumn.id ? updatedColumn : column,
       );
     },
-    moveColumn(item, directionLeft) {
+    moveColumn(item: Column, directionLeft: boolean) {
       if (directionLeft) {
         this.list.reverse();
       }
@@ -40,16 +42,18 @@ export const useColumnStore = defineStore("columnStore", {
       if (directionLeft) {
         this.list.reverse();
       }
-      this.list = this.list.map((column) => {
-        if (column.id == item.id) return tempElem;
-        else if (column.id == tempElem.id) return item;
-        else return column;
-      });
+      if (tempElem) {
+        this.list = this.list.map((column) => {
+          if (column.id === item.id) return tempElem;
+          if (column.id === tempElem.id) return item;
+          return column;
+        });
+      }
     },
-    deleteColumn(id) {
+    deleteColumn(id: string) {
       this.list = this.list.filter((column) => column.id != id);
     },
-    deleteAllColumninBoard(ownerId) {
+    deleteAllColumninBoard(ownerId: string) {
       this.list = this.list.filter((column) => column.owner != ownerId);
     },
   },

@@ -29,7 +29,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import router from "@/router/routes";
 import { ref } from "vue";
 import { useBoardStore } from "@/stores/boardStore";
@@ -37,32 +37,34 @@ import { useColumnStore } from "@/stores/columnStore";
 import { useTaskStore } from "@/stores/taskStore";
 import NewBoard from "@/components/home/NewBoard.vue";
 import EditBoard from "@/components/home/EditBoard.vue";
+import type { Board } from "@/types/board";
+import type { Column } from "@/types/column";
 
 const boards = useBoardStore();
 const columnStore = useColumnStore();
 const taskStore = useTaskStore();
 const newBoard = ref(false);
 const editBd = ref(false);
-const editBoardElement = ref(null);
+const editBoardElement = ref<Board | null>(null);
 
-const goToBoard = (item) => {
-  router.push({ name: 'Board', params: { id: item.id } });
+const goToBoard = (board: Board) => {
+  router.push({ name: 'Board', params: { id: board.id } });
 }
 
 const newDashboard = () => {
   newBoard.value = true;
 }
 
-const editBoard = (board) => {
+const editBoard = (board: Board) => {
   editBoardElement.value = board;
   editBd.value = true;
 };
 
-const deleteBoard = (id) => {
+const deleteBoard = (id: string) => {
   if (confirm(`Do you really want to delete? 
 You will lose all your info in this board.`)) {
     const columns = columnStore.getListByOwner(id);
-    columns.forEach((column) => taskStore.deleteAllTaskinColumn(column.id));
+    columns.forEach((column: Column) => taskStore.deleteAllTaskinColumn(column.id));
     columnStore.deleteAllColumninBoard(id);
     boards.deleteBoard(id);
   }
@@ -97,7 +99,8 @@ You will lose all your info in this board.`)) {
 }
 
 .dashboard-container {
-  display:flex;
+  /* display:flex; */
+  display:inline;
   flex-wrap: wrap;
   place-self: center;
 }
@@ -105,7 +108,7 @@ You will lose all your info in this board.`)) {
 .board-list {
   list-style: none;
   margin: 0;
-  padding: 0;
+  /* padding: 0; */
   display:flex;
   flex-wrap: wrap;
 }

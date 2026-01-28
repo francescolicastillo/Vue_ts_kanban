@@ -1,9 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-// @ts-ignore
-import Home from "../pages/Home.vue";
-// @ts-ignore
-import Board from "../pages/Board.vue";
+import Home from "@/pages/Home.vue";
+import Board from "@/pages/Board.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
